@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Modal, TextField, FormControl, Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ProviderCard from './ProviderCard';
 
-// Define types for provider and form state
 interface Provider {
   id: number | null;
   name: string;
@@ -24,18 +23,64 @@ const CareTeam: React.FC = () => {
     imageUrl: '',
   });
 
+  // Fetch providers from the API on component mount
+  useEffect(() => {
+    const fetchProviders = async () => {
+      try {
+        const response = await fetch('/api/careteam');
+        const data = await response.json();
+
+        // Ensure data is an array
+        if (Array.isArray(data)) {
+          setProviders(data);
+        } else {
+          console.error('Expected an array from API');
+        }
+      } catch (error) {
+        console.error('Error fetching providers:', error);
+      }
+    };
+    fetchProviders();
+  }, []);
+
   // Handle adding or updating provider
-  const handleAddProvider = () => {
-    if (isEditing) {
-      setProviders(providers.map(provider =>
-        provider.id === newProvider.id ? newProvider : provider
-      ));
-      setIsEditing(false);
-    } else {
-      setProviders([...providers, { ...newProvider, id: Date.now() }]);
+  const handleAddProvider = async () => {
+    try {
+      if (isEditing) {
+        await fetch(`/api/careteam`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newProvider),
+        });
+        setProviders(providers.map(provider =>
+          provider.id === newProvider.id ? newProvider : provider
+        ));
+        setIsEditing(false);
+      } else {
+        await fetch(`/api/careteam`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newProvider),
+        });
+        setProviders([...providers, { ...newProvider, id: Date.now() }]);
+      }
+      resetProviderForm();
+      setShowModal(false);
+    } catch (error) {
+      console.error('Error adding/updating provider:', error);
     }
-    resetProviderForm();
-    setShowModal(false);
+  };
+
+  // Handle provider deletion
+  const handleDelete = async (id: number) => {
+    try {
+      await fetch(`/api/careteam/${id}`, {
+        method: 'DELETE',
+      });
+      setProviders(providers.filter(provider => provider.id !== id));
+    } catch (error) {
+      console.error('Error deleting provider:', error);
+    }
   };
 
   // Handle input changes in the form
@@ -54,11 +99,6 @@ const CareTeam: React.FC = () => {
     setShowModal(true);
   };
 
-  // Handle provider deletion
-  const handleDelete = (id: number) => {
-    setProviders(providers.filter(provider => provider.id !== id));
-  };
-
   // Reset the provider form
   const resetProviderForm = () => {
     setNewProvider({
@@ -72,14 +112,18 @@ const CareTeam: React.FC = () => {
 
   return (
     <div>
-      {providers.map((provider) => (
-        <ProviderCard
-          key={provider.id}
-          {...provider}
-          onEdit={() => handleEdit(provider)}
-          onDelete={() => handleDelete(provider.id)}
-        />
-      ))}
+      {providers.length > 0 ? (
+        providers.map((provider) => (
+          <ProviderCard
+            key={provider.id}
+            {...provider}
+            onEdit={() => handleEdit(provider)}
+            onDelete={() => handleDelete(provider.id)}
+          />
+        ))
+      ) : (
+        <p>No providers found.</p>
+      )}
       <Button
         variant="contained"
         color="primary"

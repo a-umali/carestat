@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
-import { Modal, Button, TextField, FormControl } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Modal, Button, TextField, FormControl, Card, CardContent, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
@@ -18,31 +15,51 @@ const CardForm = () => {
   const theme = useTheme();
   const secondaryColor = theme.palette.secondary.main;
 
-  const handleSubmit = () => {
-    if (editingCardId !== null) {
-      // Edit existing card
-      setCards(cards.map(card => 
-        card.id === editingCardId
-          ? { ...card, title, date, description }
-          : card
-      ));
+  useEffect(() => {
+    // Fetch cards on component mount
+    const fetchCards = async () => {
+      const response = await fetch('/api/cards');
+      if (response.ok) {
+        const data = await response.json();
+        setCards(data);
+      } else {
+        console.error('Error fetching cards:', await response.json());
+      }
+    };
+    fetchCards();
+  }, []);
+
+  const handleSubmit = async () => {
+    const method = editingCardId ? 'PUT' : 'POST';
+    const endpoint = '/api/cards'; // Endpoint is the same for both POST and PUT
+
+    const response = await fetch(endpoint, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: editingCardId, title, date, description }),
+    });
+
+    if (response.ok) {
+      if (editingCardId) {
+        // Handle successful update
+        const updatedCard = await response.json();
+        setCards(cards.map(card =>
+          card.id === editingCardId ? { ...card, title, date, description } : card
+        ));
+      } else {
+        // Handle new card addition
+        const newCard = await response.json();
+        setCards([...cards, newCard]);
+      }
       setEditingCardId(null);
+      setTitle('');
+      setDate('');
+      setDescription('');
+      setShowModal(false);
     } else {
-      // Add new card
-      const newCard = {
-        id: Date.now(), // Use a timestamp as a unique ID
-        title,
-        date,
-        description
-      };
-
-      setCards([...cards, newCard]);
+      const error = await response.json();
+      console.error('Error:', error);
     }
-
-    setTitle('');
-    setDate('');
-    setDescription('');
-    setShowModal(false);
   };
 
   const handleEdit = (card) => {
@@ -53,8 +70,17 @@ const CardForm = () => {
     setShowModal(true);
   };
 
-  const handleDelete = (id) => {
-    setCards(cards.filter(card => card.id !== id));
+  const handleDelete = async (id) => {
+    const response = await fetch(`/api/cards/${id}`, {
+      method: 'DELETE',
+    });
+  
+    if (response.ok) {
+      setCards(cards.filter(card => card.id !== id));
+    } else {
+      const error = await response.json();
+      console.error('Error:', error);
+    }
   };
 
   return (
@@ -73,7 +99,7 @@ const CardForm = () => {
         <AddIcon /> Add a log
       </Button>
 
-      <TransitionGroup id="cardContainer" sx={{ marginTop: 2 }}>
+      <TransitionGroup id="cardContainer">
         {cards.map(card => (
           <CSSTransition
             key={card.id}
@@ -97,7 +123,9 @@ const CardForm = () => {
                 <Typography variant="subtitle2">
                   {card.date}
                 </Typography>
+                <Typography>
                   {card.description}
+                </Typography>
                 <div style={{ marginTop: 10 }}>
                   <Button variant="outlined" color="secondary" onClick={() => handleEdit(card)}>
                     Edit
