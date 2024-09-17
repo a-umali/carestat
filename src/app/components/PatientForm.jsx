@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { TextField, Grid, Typography, Button } from "@mui/material";
+import { TextField, Grid, Typography, Button, Box } from "@mui/material";
 import { useRouter } from "next/navigation";
-import handler from "../api/patient";
 
 const PatientForm = () => {
   const [formData, setFormData] = useState({
@@ -15,13 +14,10 @@ const PatientForm = () => {
     state: "",
     zipCode: "",
     dateOfBirth: "",
-    age: "",
-    socialSecurity: "",
+    medicareId: "", // Renamed from 'socialSecurity'
     homePhone: "",
     cellPhone: "",
-    bestTimeToCall: "",
     religion: "",
-    race: "",
     maritalStatus: "",
     occupation: "",
     workNumber: "",
@@ -29,35 +25,6 @@ const PatientForm = () => {
     emergencyContacts: [
       { name: "", relationship: "", phone: "", cellPhone: "", address: "" },
     ],
-    insurance: {
-      primary: {
-        company: "",
-        policy: "",
-        group: "",
-        claimsAddress: "",
-        policyHolderEmployer: "",
-        relationshipToInsured: "",
-        policyHolderName: "",
-        subscriberSocialSecurity: "",
-        gender: "",
-        dateOfBirth: "",
-      },
-      secondary: {
-        company: "",
-        policy: "",
-        group: "",
-        claimsAddress: "",
-        relationshipToInsured: "",
-        policyHolderName: "",
-        subscriberSocialSecurity: "",
-        gender: "",
-        dateOfBirth: "",
-      },
-    },
-    referralInfo: {
-      name: "",
-      phone: "",
-    },
   });
 
   const router = useRouter();
@@ -87,7 +54,7 @@ const PatientForm = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch("/api/patient", {
+      const response = await fetch("/api/form", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -103,119 +70,219 @@ const PatientForm = () => {
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      console.log (error);
       alert("An error occurred while saving data.");
     }
   };
-  
-  
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Box sx={{ padding: 3, margin: 2 }}>
       <Typography variant="h4" gutterBottom>
         Patient Information
       </Typography>
-      <Grid container spacing={2}>
-        {/* Personal Information Fields */}
-        <Grid item xs={12} sm={4}>
-          <TextField
-            name="lastName"
-            label="Last Name"
-            value={formData.lastName}
-            onChange={handleChange}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            name="firstName"
-            label="First Name"
-            value={formData.firstName}
-            onChange={handleChange}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            name="initial"
-            label="Initial"
-            value={formData.initial}
-            onChange={handleChange}
-            fullWidth
-          />
-        </Grid>
-        {/* Address Fields */}
-        <Grid item xs={12}>
-          <TextField
-            name="streetAddress"
-            label="Street Address"
-            value={formData.streetAddress}
-            onChange={handleChange}
-            fullWidth
-          />
-        </Grid>
-        {/* Additional Fields as needed */}
-      </Grid>
-
-      {/* Emergency Contacts Section */}
-      <Typography variant="h5" gutterBottom>
-        Emergency Contact
-      </Typography>
-      {formData.emergencyContacts.map((contact, index) => (
-        <Grid container spacing={2} key={index}>
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={2}>
+          {/* Personal Information Fields */}
           <Grid item xs={12} sm={6}>
             <TextField
-              name="name"
-              label="Name"
-              value={contact.name}
-              onChange={(e) => handleEmergencyContactChange(index, e)}
+              name="lastName"
+              label="Last Name"
+              value={formData.lastName}
+              onChange={handleChange}
+              fullWidth
+              required
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              name="firstName"
+              label="First Name"
+              value={formData.firstName}
+              onChange={handleChange}
+              fullWidth
+              required
+            />
+          </Grid>
+          {/* Address Fields */}
+          <Grid item xs={12}>
+            <TextField
+              name="streetAddress"
+              label="Street Address"
+              value={formData.streetAddress}
+              onChange={handleChange}
               fullWidth
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              name="relationship"
-              label="Relationship to Patient"
-              value={contact.relationship}
-              onChange={(e) => handleEmergencyContactChange(index, e)}
+              name="city"
+              label="City"
+              value={formData.city}
+              onChange={handleChange}
               fullWidth
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              name="phone"
-              label="Phone #"
-              value={contact.phone}
-              onChange={(e) => handleEmergencyContactChange(index, e)}
+              name="state"
+              label="State"
+              value={formData.state}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              name="zipCode"
+              label="Zip Code"
+              value={formData.zipCode}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              name="dateOfBirth"
+              label="Date of Birth"
+              value={formData.dateOfBirth}
+              onChange={handleChange}
+              fullWidth
+              type="date"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              name="medicareId" // Renamed from 'socialSecurity'
+              label="Medicare ID"
+              value={formData.medicareId}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              name="homePhone"
+              label="Home Phone"
+              value={formData.homePhone}
+              onChange={handleChange}
               fullWidth
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               name="cellPhone"
-              label="Cell Phone #"
-              value={contact.cellPhone}
-              onChange={(e) => handleEmergencyContactChange(index, e)}
+              label="Cell Phone"
+              value={formData.cellPhone}
+              onChange={handleChange}
               fullWidth
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
-              name="address"
-              label="Street Address"
-              value={contact.address}
-              onChange={(e) => handleEmergencyContactChange(index, e)}
+              name="religion"
+              label="Religion"
+              value={formData.religion}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              name="maritalStatus"
+              label="Marital Status"
+              value={formData.maritalStatus}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              name="occupation"
+              label="Occupation"
+              value={formData.occupation}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              name="workNumber"
+              label="Work Number"
+              value={formData.workNumber}
+              onChange={handleChange}
+              fullWidth
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              name="employerAddress"
+              label="Employer Address"
+              value={formData.employerAddress}
+              onChange={handleChange}
               fullWidth
             />
           </Grid>
         </Grid>
-      ))}
 
-      {/* Submit Button */}
-      <Button type="submit" variant="contained" color="primary">
-        Submit
-      </Button>
-    </form>
+        {/* Emergency Contacts Section */}
+        <Typography variant="h5" gutterBottom>
+          Emergency Contacts
+        </Typography>
+        {formData.emergencyContacts.map((contact, index) => (
+          <Grid container spacing={2} key={index}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name="name"
+                label="Name"
+                value={contact.name}
+                onChange={(e) => handleEmergencyContactChange(index, e)}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name="relationship"
+                label="Relationship"
+                value={contact.relationship}
+                onChange={(e) => handleEmergencyContactChange(index, e)}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name="phone"
+                label="Phone"
+                value={contact.phone}
+                onChange={(e) => handleEmergencyContactChange(index, e)}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name="cellPhone"
+                label="Cell Phone"
+                value={contact.cellPhone}
+                onChange={(e) => handleEmergencyContactChange(index, e)}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name="address"
+                label="Address"
+                value={contact.address}
+                onChange={(e) => handleEmergencyContactChange(index, e)}
+                fullWidth
+              />
+            </Grid>
+          </Grid>
+        ))}
+
+        {/* Submit Button */}
+        <Button type="submit" variant="contained" color="primary" sx={{ marginTop: 2 }}>
+          Submit
+        </Button>
+      </form>
+    </Box>
   );
 };
 

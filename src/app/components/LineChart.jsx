@@ -9,14 +9,19 @@ ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip,
 const LineChart = () => {
   const [labels, setLabels] = useState([]);
   const [data, setData] = useState([]);
-  const [labelInput, setLabelInput] = useState('');
+  const [dateInput, setDateInput] = useState('');
+  const [timeInput, setTimeInput] = useState('');
   const [numberInput, setNumberInput] = useState('');
 
   const handleAddData = () => {
-    const label = labelInput;
+    const date = dateInput;
+    const time = timeInput;
     const number = parseFloat(numberInput);
 
-    if (label !== "" && !isNaN(number)) {
+    if (date && time && !isNaN(number)) {
+      // Combine date and time into a single datetime string
+      const label = `${date}T${time}`;
+
       // Create a new data point with the input values
       const newEntry = { label, number };
 
@@ -31,10 +36,11 @@ const LineChart = () => {
       setData(updatedEntries.map(entry => entry.number));
 
       // Clear input fields
-      setLabelInput('');
+      setDateInput('');
+      setTimeInput('');
       setNumberInput('');
     } else {
-      alert("Please enter both label and a valid number.");
+      alert("Please enter a valid date, time, and number.");
     }
   };
 
@@ -82,12 +88,24 @@ const LineChart = () => {
       </Typography>
       <Box sx={{ mb: 2 }}>
         <TextField
-          label="Date/Time (e.g., 2024-08-21T14:30:00)"
-          value={labelInput}
-          onChange={(e) => setLabelInput(e.target.value)}
+          label="Date (e.g., 2024-01-25)"
+          type="date"
+          value={dateInput}
+          onChange={(e) => setDateInput(e.target.value)}
           fullWidth
           margin="normal"
           variant="outlined"
+          InputLabelProps={{ shrink: true }}
+        />
+        <TextField
+          label="Time (e.g., 14:30:00)"
+          type="time"
+          value={timeInput}
+          onChange={(e) => setTimeInput(e.target.value)}
+          fullWidth
+          margin="normal"
+          variant="outlined"
+          InputLabelProps={{ shrink: true }}
         />
         <TextField
           label="Blood Sugar Level (mmol/L)"

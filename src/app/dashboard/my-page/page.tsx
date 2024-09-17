@@ -187,13 +187,15 @@ const MyPage: React.FC = () => {
         >
           <Box
             sx={{
-              width: 700,
-              height: 700,
+              width: '90%',
+              maxWidth: 700,
+              maxHeight: '90vh',
               padding: 2,
               backgroundColor: 'background.paper',
               borderRadius: 2,
               color: 'darkblue',
               position: 'relative',
+              overflowY: 'auto',
             }}
           >
             <IconButton
@@ -229,13 +231,15 @@ const MyPage: React.FC = () => {
         >
           <Box
             sx={{
-              width: 700,
-              height: 700,
+              width: '90%',
+              maxWidth: 700,
+              maxHeight: '90vh',
               padding: 2,
               backgroundColor: 'background.paper',
               borderRadius: 2,
               color: 'darkblue',
               position: 'relative',
+              overflowY: 'auto',
             }}
           >
             <IconButton
@@ -271,12 +275,15 @@ const MyPage: React.FC = () => {
         >
           <Box
             sx={{
-              width: 700,
+              width: '90%',
+              maxWidth: 700,
+              maxHeight: '90vh',
               padding: 2,
               backgroundColor: 'background.paper',
               borderRadius: 2,
               color: 'darkblue',
               position: 'relative',
+              overflowY: 'auto',
             }}
           >
             <IconButton
@@ -312,12 +319,15 @@ const MyPage: React.FC = () => {
         >
           <Box
             sx={{
-              width: 700,
+              width: '90%',
+              maxWidth: 700,
+              maxHeight: '90vh',
               padding: 2,
               backgroundColor: 'background.paper',
               borderRadius: 2,
               color: 'darkblue',
               position: 'relative',
+              overflowY: 'auto',
             }}
           >
             <IconButton
