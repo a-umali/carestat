@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Button, TextField, FormControl, Card, CardContent, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/material/styles';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const CardForm = () => {
   const [title, setTitle] = useState('');
@@ -18,47 +17,52 @@ const CardForm = () => {
   useEffect(() => {
     // Fetch cards on component mount
     const fetchCards = async () => {
-      const response = await fetch('/api/cards');
-      if (response.ok) {
+      try {
+        const response = await fetch('/api/cards');
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
         const data = await response.json();
         setCards(data);
-      } else {
-        console.error('Error fetching cards:', await response.json());
+      } catch (error) {
+        console.error('Error fetching cards:', error);
       }
     };
     fetchCards();
   }, []);
 
   const handleSubmit = async () => {
-    const method = editingCardId ? 'PUT' : 'POST';
-    const endpoint = '/api/cards'; // Endpoint is the same for both POST and PUT
+    try {
+      const method = editingCardId ? 'PUT' : 'POST';
+      const endpoint = '/api/cards'; // Endpoint is the same for both POST and PUT
 
-    const response = await fetch(endpoint, {
-      method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: editingCardId, title, date, description }),
-    });
+      const response = await fetch(endpoint, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: editingCardId, title, date, description }),
+      });
 
-    if (response.ok) {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
       if (editingCardId) {
         // Handle successful update
-        const updatedCard = await response.json();
         setCards(cards.map(card =>
           card.id === editingCardId ? { ...card, title, date, description } : card
         ));
       } else {
         // Handle new card addition
-        const newCard = await response.json();
-        setCards([...cards, newCard]);
+        setCards([...cards, result]);
       }
       setEditingCardId(null);
       setTitle('');
       setDate('');
       setDescription('');
       setShowModal(false);
-    } else {
-      const error = await response.json();
-      console.error('Error:', error);
+    } catch (error) {
+      console.error('Error submitting card:', error);
     }
   };
 
@@ -71,16 +75,25 @@ const CardForm = () => {
   };
 
   const handleDelete = async (id) => {
-    const response = await fetch(`/api/cards/${id}`, {
-      method: 'DELETE',
-    });
-  
-    if (response.ok) {
+    try {
+      const response = await fetch(`/api/cards/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
       setCards(cards.filter(card => card.id !== id));
-    } else {
-      const error = await response.json();
-      console.error('Error:', error);
+    } catch (error) {
+      console.error('Error deleting card:', error);
     }
+  };
+
+  // Helper function to format date
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString(); // Formats date to "MM/DD/YYYY" by default; you can adjust the format if needed
   };
 
   return (
@@ -99,46 +112,41 @@ const CardForm = () => {
         <AddIcon /> Add a log
       </Button>
 
-      <TransitionGroup id="cardContainer">
+      <div id="cardContainer">
         {cards.map(card => (
-          <CSSTransition
+          <Card
             key={card.id}
-            timeout={500}
-            classNames="card"
+            sx={{
+              marginTop: 2,
+              marginBottom: 2,
+              border: `5px solid ${secondaryColor}`,
+              maxWidth: 1000,
+              overflow: 'auto',
+              color: 'black',
+            }}
           >
-            <Card
-              sx={{
-                marginTop: 2,
-                marginBottom: 2,
-                border: `5px solid ${secondaryColor}`,
-                maxWidth: 1000,
-                overflow: 'auto',
-                color: 'black',
-              }}
-            >
-              <CardContent sx={{ padding: '8px' }}>
-                <Typography component="div" color={secondaryColor}>
-                  {card.title}
-                </Typography>
-                <Typography variant="subtitle2">
-                  {card.date}
-                </Typography>
-                <Typography>
-                  {card.description}
-                </Typography>
-                <div style={{ marginTop: 10 }}>
-                  <Button variant="outlined" color="secondary" onClick={() => handleEdit(card)}>
-                    Edit
-                  </Button>
-                  <Button variant="outlined" color="error" onClick={() => handleDelete(card.id)} style={{ marginLeft: 10 }}>
-                    Delete
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </CSSTransition>
+            <CardContent sx={{ padding: '8px' }}>
+              <Typography component="div" color={secondaryColor}>
+                {card.title}
+              </Typography>
+              <Typography variant="subtitle2">
+                {formatDate(card.date)} {/* Format date to remove time */}
+              </Typography>
+              <Typography>
+                {card.description}
+              </Typography>
+              <div style={{ marginTop: 10 }}>
+                <Button variant="outlined" color="secondary" onClick={() => handleEdit(card)}>
+                  Edit
+                </Button>
+                <Button variant="outlined" color="error" onClick={() => handleDelete(card.id)} style={{ marginLeft: 10 }}>
+                  Delete
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         ))}
-      </TransitionGroup>
+      </div>
 
       <Modal open={showModal} onClose={() => setShowModal(false)}>
         <div style={{ padding: 20, backgroundColor: 'white', margin: 'auto', maxWidth: 600, color: 'black' }}>
