@@ -34,40 +34,51 @@ export const Navbar = () => {
     signOut({ callbackUrl: "/" }); // Redirect to home page after sign out
   };
 
+  const handleMouseOver = (event) => {
+    (event.currentTarget as HTMLElement).style.backgroundColor = "rgba(0, 255, 0, 0.5)"; // Light green
+  };
+
+  const handleMouseOut = (event) => {
+    (event.currentTarget as HTMLElement).style.backgroundColor = "transparent";
+  };
+
   return (
     <AppBar
       position="fixed"
       sx={{
-        backgroundColor: "rgba(0,70,255,0.9)", // Solid background color
-        zIndex: 1200, // Ensure the navbar is on top of other content
-        boxShadow: 'none', // Remove any default shadow
-        padding: '0 16px', // Add some padding to the sides
+        backgroundColor: "transparent",
+        zIndex: 1200,
+        padding: "12px 0",
       }}
     >
       <Container maxWidth="lg">
-        <Toolbar disableGutters>
-          {/* Logo Section (visible on all screen sizes) */}
-          <Box sx={{ flexGrow: 1 }}>
+        <Toolbar disableGutters sx={{ justifyContent: 'space-between', flexWrap: 'wrap' }}>
+          {/* Logo Section */}
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Link href="/" passHref legacyBehavior>
               <a>
                 <img
                   src="/images/logo1.png"
                   alt="Logo"
-                  style={{ height: 70, width: 'auto', display: 'block' }}
+                  style={{
+                    height: 100,
+                    width: "auto",
+                    marginRight: "50px",
+                  }}
                 />
               </a>
             </Link>
           </Box>
 
-          {/* Mobile Menu Icon (visible on small screens) */}
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          {/* Mobile Menu Icon */}
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="Nav Menu"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="inherit"
+              color="black"
             >
               <MenuIcon />
             </IconButton>
@@ -85,14 +96,11 @@ export const Navbar = () => {
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: "block", md: "none" },
-              }}
             >
               {pages.map((page) => (
                 <MenuItem key={page.title} onClick={handleCloseNavMenu}>
                   <Link href={page.href} passHref legacyBehavior>
-                    <a style={{ color: "inherit", textDecoration: "none", padding: "8px" }}>
+                    <a style={{ color: "black", textDecoration: "none" }}>
                       {page.title}
                     </a>
                   </Link>
@@ -105,32 +113,40 @@ export const Navbar = () => {
                     handleSignOut();
                   }}
                 >
-                  <span style={{ color: "inherit", textDecoration: "none", padding: "8px" }}>
-                    Sign Out
-                  </span>
+                  <span style={{ color: "black" }}>Sign Out</span>
                 </MenuItem>
               )}
             </Menu>
           </Box>
 
-          {/* Mobile Logo Section (hidden on small screens) */}
-          <Box sx={{ display: { xs: "flex", md: "none" }, flexGrow: 1, alignItems: "center" }}>
-            <Link href="/" passHref legacyBehavior>
-              <a>
-                <img
-                  src="/images/logo.png"
-                  alt="Logo"
-                  style={{ height: 40, width: 'auto', display: 'block' }}
-                />
-              </a>
-            </Link>
-          </Box>
-
-          {/* Navigation Links (visible on medium and larger screens) */}
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, gap: 2, alignItems: "center" }}>
+          {/* Desktop Navigation Links */}
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+              gap: 3,
+              alignItems: "center",
+              justifyContent: 'center',
+              background: 'rgba(0, 132, 255, 0.1)',
+              borderRadius: '16px',
+              padding: '12px 24px',
+            }}
+          >
             {pages.map((page) => (
               <Link key={page.title} href={page.href} passHref legacyBehavior>
-                <a style={{ color: "black", display: "block", margin: "0 16px", textDecoration: "none" }}>
+                <a
+                  style={{
+                    color: "black",
+                    fontSize: "2rem",
+                    fontWeight: "bold",
+                    textDecoration: "none",
+                    border: "2px solid black",
+                    padding: "8px 16px",
+                    borderRadius: "8px",
+                    transition: "background-color 0.3s ease, border-color 0.3s ease",
+                  }}
+                  onMouseOver={handleMouseOver}
+                  onMouseOut={handleMouseOut}
+                >
                   {page.title}
                 </a>
               </Link>
@@ -138,7 +154,19 @@ export const Navbar = () => {
             {session && (
               <span
                 onClick={handleSignOut}
-                style={{ color: "black", display: "block", margin: "0 16px", cursor: "pointer" }}
+                style={{
+                  color: "black",
+                  fontSize: "2rem",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                  textDecoration: "none",
+                  border: "2px solid black",
+                  padding: "8px 16px",
+                  borderRadius: "8px",
+                  transition: "background-color 0.3s ease, border-color 0.3s ease",
+                }}
+                onMouseOver={handleMouseOver}
+                onMouseOut={handleMouseOut}
               >
                 Sign Out
               </span>
@@ -146,11 +174,11 @@ export const Navbar = () => {
           </Box>
 
           {/* User Avatar or Guest Label */}
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box sx={{ display: "flex", alignItems: "center", marginLeft: 'auto' }}>
             {session && session.user ? (
               <LetterAvatar name={session.user.name || "User"} />
             ) : (
-              <p style={{ color: "black" }}>Guest</p>
+              <p style={{ color: "black", fontSize: "2rem", fontWeight: "bold", border: "2px solid black", padding: "4px 8px", borderRadius: "8px" }}>Guest</p>
             )}
           </Box>
         </Toolbar>

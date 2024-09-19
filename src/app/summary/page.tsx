@@ -111,6 +111,18 @@ const SummaryPage = () => {
   }
 
   return (
+    <Grid
+    container
+    spacing={2}
+    style={{
+      backgroundImage: `url('/images/dashbg.png')`,
+      backgroundSize: 'auto',
+      backgroundRepeat: 'repeat',
+      minHeight: '100vh',
+      paddingTop: '64px',
+      boxSizing: 'border-box',
+    }}
+  >
     <Grid container spacing={3} sx={{ padding: 5, marginTop: '80px' }} justifyContent={"center"}>
       {editPatient ? (
         <Grid item xs={12} sm={6} md={4}>
@@ -305,6 +317,7 @@ const SummaryPage = () => {
           </Grid>
         ))
       )}
+    </Grid>
     </Grid>
   );
 };

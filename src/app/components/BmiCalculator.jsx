@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, Typography, Paper, Box } from '@mui/material';
+import { TextField, Button, Typography, Paper } from '@mui/material';
 
 const BmiCalculator = () => {
   const [weight, setWeight] = useState('');
@@ -34,13 +34,10 @@ const BmiCalculator = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // Clear previous error and results
     setError('');
     setBmi(null);
     setCategory('');
 
-    // Validate inputs
     const weightValue = parseFloat(weight);
     const heightValue = parseFloat(height);
     if (isNaN(weightValue) || weightValue <= 0 || isNaN(heightValue) || heightValue <= 0) {
@@ -51,9 +48,7 @@ const BmiCalculator = () => {
     try {
       const response = await fetch('/api/bmi', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ weight: weightValue, height: heightValue }),
       });
 
@@ -62,11 +57,7 @@ const BmiCalculator = () => {
         throw new Error(errorData.error || 'Network response was not ok');
       }
 
-      // Extract data from response
       const data = await response.json();
-      console.log('API Response:', data);
-
-      // Recalculate BMI and determine category
       const { bmi, category } = calculateBmiAndCategory(data.weight, data.height);
       setBmi(bmi);
       setCategory(category);
@@ -79,46 +70,44 @@ const BmiCalculator = () => {
     <Paper sx={{ padding: 2, margin: 2 }}>
       <Typography variant="h6">BMI Calculator</Typography>
       <form onSubmit={handleSubmit}>
-        <Box sx={{ mb: 2 }}>
-          <TextField
-            label="Weight (kg)"
-            type="number"
-            step="0.1"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-            fullWidth
-            required
-            margin="normal"
-            inputProps={{ min: "0", step: "0.1" }} // Ensures decimal input
-          />
-        </Box>
-        <Box sx={{ mb: 2 }}>
-          <TextField
-            label="Height (m)"
-            type="number"
-            step="0.01" // Allows decimal input with up to 2 decimal places
-            value={height}
-            onChange={(e) => setHeight(e.target.value)}
-            fullWidth
-            required
-            margin="normal"
-            inputProps={{ min: "0", step: "0.01" }} // Ensures decimal input
-          />
-        </Box>
+        <TextField
+          label="Weight (kg)"
+          type="number"
+          step="0.1"
+          value={weight}
+          onChange={(e) => setWeight(e.target.value)}
+          fullWidth
+          required
+          margin="normal"
+          inputProps={{ min: "0", step: "0.1" }}
+          sx={{ mb: 2 }}
+        />
+        <TextField
+          label="Height (m)"
+          type="number"
+          step="0.01"
+          value={height}
+          onChange={(e) => setHeight(e.target.value)}
+          fullWidth
+          required
+          margin="normal"
+          inputProps={{ min: "0", step: "0.01" }}
+          sx={{ mb: 2 }}
+        />
         <Button variant="contained" color="primary" type="submit">
           Calculate BMI
         </Button>
       </form>
       {bmi !== null && !isNaN(bmi) && (
-        <Box sx={{ mt: 2 }}>
+        <div style={{ marginTop: '16px' }}>
           <Typography variant="h6">Your BMI is: {bmi.toFixed(1)}</Typography>
           <Typography>Category: {category}</Typography>
-        </Box>
+        </div>
       )}
       {error && (
-        <Box sx={{ mt: 2 }}>
+        <div style={{ marginTop: '16px' }}>
           <Typography color="error">Error: {error}</Typography>
-        </Box>
+        </div>
       )}
     </Paper>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { TextField, Grid, Typography, Button, Box } from "@mui/material";
+import { TextField, Grid, Typography, Button, Paper } from "@mui/material";
 import { useRouter } from "next/navigation";
 
 const PatientForm = () => {
@@ -14,7 +14,7 @@ const PatientForm = () => {
     state: "",
     zipCode: "",
     dateOfBirth: "",
-    medicareId: "", // Renamed from 'socialSecurity'
+    medicareId: "",
     homePhone: "",
     cellPhone: "",
     religion: "",
@@ -29,7 +29,6 @@ const PatientForm = () => {
 
   const router = useRouter();
 
-  // Handle general input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -38,7 +37,6 @@ const PatientForm = () => {
     }));
   };
 
-  // Handle changes in emergency contacts array
   const handleEmergencyContactChange = (index, e) => {
     const { name, value } = e.target;
     const updatedContacts = [...formData.emergencyContacts];
@@ -49,7 +47,6 @@ const PatientForm = () => {
     }));
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -62,7 +59,7 @@ const PatientForm = () => {
       
       if (response.ok) {
         alert("Data saved successfully!");
-        router.push("/summary"); // Navigate to summary page
+        router.push("/summary");
       } else {
         const errorData = await response.json();
         console.error("Failed to save data:", errorData);
@@ -75,8 +72,8 @@ const PatientForm = () => {
   };
 
   return (
-    <Box sx={{ padding: 3, margin: 2 }}>
-      <Typography variant="h4" gutterBottom>
+    <Paper sx={{ padding: 3, margin: 2 }}>
+      <Typography variant="h4" gutterBottom color='black'>
         Patient Information
       </Typography>
       <form onSubmit={handleSubmit}>
@@ -151,7 +148,7 @@ const PatientForm = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              name="medicareId" // Renamed from 'socialSecurity'
+              name="medicareId"
               label="Medicare ID"
               value={formData.medicareId}
               onChange={handleChange}
@@ -282,7 +279,7 @@ const PatientForm = () => {
           Submit
         </Button>
       </form>
-    </Box>
+    </Paper>
   );
 };
 

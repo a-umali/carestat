@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
-import { Button, TextField, Typography, Box, Paper } from '@mui/material';
+import { Button, TextField, Typography, Paper } from '@mui/material';
 
 // Register necessary Chart.js components
 ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Tooltip, Legend);
@@ -19,23 +19,15 @@ const LineChart = () => {
     const number = parseFloat(numberInput);
 
     if (date && time && !isNaN(number)) {
-      // Combine date and time into a single datetime string
       const label = `${date}T${time}`;
-
-      // Create a new data point with the input values
       const newEntry = { label, number };
-
-      // Add the new entry to the data array
       const updatedEntries = [...labels.map((label, index) => ({ label, number: data[index] })), newEntry];
 
-      // Sort entries by label (date/time)
       updatedEntries.sort((a, b) => new Date(a.label) - new Date(b.label));
 
-      // Update labels and data arrays
       setLabels(updatedEntries.map(entry => entry.label));
       setData(updatedEntries.map(entry => entry.number));
 
-      // Clear input fields
       setDateInput('');
       setTimeInput('');
       setNumberInput('');
@@ -44,7 +36,6 @@ const LineChart = () => {
     }
   };
 
-  // Determine line color based on data values
   const getBorderColor = () => {
     if (data.some(value => value < 3.5 || value > 8.0)) {
       return 'rgba(255, 0, 0, 0.8)'; // Red color for out-of-range values
@@ -52,7 +43,6 @@ const LineChart = () => {
     return 'rgba(0, 238, 131, 0.8)'; // Green color for within-range values
   };
 
-  // Chart data and options
   const chartData = {
     labels,
     datasets: [
@@ -80,13 +70,13 @@ const LineChart = () => {
 
   return (
     <Paper sx={{ padding: 3, margin: 2 }}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom color='black'>
         Check your Blood Sugar Level
       </Typography>
       <Typography variant="subtitle1" gutterBottom>
         Line will turn RED if it's not within health range
       </Typography>
-      <Box sx={{ mb: 2 }}>
+      <div style={{ marginBottom: '16px' }}>
         <TextField
           label="Date (e.g., 2024-01-25)"
           type="date"
@@ -125,10 +115,10 @@ const LineChart = () => {
         >
           Add Data
         </Button>
-      </Box>
-      <Box sx={{ width: '100%', height: '500px' }}>
+      </div>
+      <div style={{ width: '100%', height: '500px' }}>
         <Line data={chartData} options={chartOptions} />
-      </Box>
+      </div>
     </Paper>
   );
 };

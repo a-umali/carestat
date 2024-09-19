@@ -38,6 +38,11 @@
   --callout-border-rgb: 172, 175, 176;
   --card-rgb: 180, 185, 188;
   --card-border-rgb: 131, 134, 135;
+
+  --primary-color: #3f51b5;
+  --secondary-color: #2196f3;
+  --background-light: #f4f6f9;
+  --foreground-light: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -106,7 +111,62 @@ a {
   }
 }
 
-/* calendar-css */
+/* Enhancements */
+
+/* Typography Enhancements */
+h4 {
+  font-size: 2.5rem;
+  color: #fff;
+  font-weight: bold;
+  margin-top: 0;
+}
+
+/* Main Layout Enhancements */
+body {
+  background-color: var(--background-light);
+}
+
+.MuiPaper-root {
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius);
+}
+
+.MuiButton-root {
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  color: var(--foreground-light);
+  border-radius: 25px;
+  padding: 8px 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Drawer Styling */
+.MuiDrawer-paper {
+  background: #283593;
+  color: white;
+}
+
+.MuiListItemText-root {
+  font-weight: bold;
+  color: #fff;
+}
+
+.MuiListItemIcon-root {
+  color: #ffeb3b;
+}
+
+/* Modal Glass Effect */
+.MuiModal-root {
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.MuiBox-root {
+  background: rgba(0, 132, 255, 0.1);
+  box-shadow: 0px 4px 15px rgba(0, 132, 255, 0.2);
+  border-radius: 16px;
+}
+
+/* Calendar Styles */
 .react-calendar {
   border: 2px solid blue;
   background: white;
@@ -128,23 +188,21 @@ a {
   color: black;
 }
 
-/* css for loading gif */
-
+/* CSS for loading GIF */
 .loading-overlay {
-  position: fixed; /* Ensures the overlay covers the entire viewport */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+  background-color: rgba(255, 255, 255, 0.8);
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  z-index: 9999; /* Ensures it's on top of other content */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
-/* Loading GIF */
 .loading-overlay img {
-  width: 50px; /* Adjust the size of the loading GIF */
+  width: 50px;
   height: 50px;
 }

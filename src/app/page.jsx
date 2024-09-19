@@ -120,7 +120,10 @@ export default function HomePage() {
                             maxWidth: "800px", // Optional: set a max width for better layout control
                         }}
                     >
-                        <Typography variant="h4" sx={{ mb: 2 }}>Welcome to my website</Typography>
+                        <Typography variant="h4" sx={{ mb: 2, color: 'black' }}>
+                            Welcome to my website
+                        </Typography>
+
                         <Box>
                             <Typography variant="h6" sx={{ display: "flex", alignItems: "center" }}>
                                 <ForumIcon fontSize="large" sx={{ mr: 1 }} /> Communicate with your doctor
@@ -166,7 +169,7 @@ export default function HomePage() {
                             textAlign: "center", // Center text in Paper
                         }}
                     >
-                        <Typography variant="h4" sx={{ mb: 2 }}>Login</Typography>
+                        <Typography variant="h4" sx={{ mb: 2, color: 'black' }}>Login</Typography>
                         <Button
                             size="large"
                             variant="contained"

@@ -79,19 +79,22 @@ const MyPage: React.FC = () => {
     >
       {/* Header Section */}
       <Grid item xs={12} style={{ marginBottom: 0 }}>
-        <Box
-          style={{
-            padding: '16px',
-            marginBottom: 0,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Typography variant="h4" align="center" style={{ fontWeight: 'bold' }}>
-            <UserCard />
-          </Typography>
-        </Box>
+      <Box sx={{ pt: 20, color: 'transparent' }}> {/* pt: 10 will add padding-top */}
+  <Paper
+    style={{
+      padding: '16px',
+      marginBottom: 0,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
+  >
+    <Typography variant="h4" align="center" style={{ fontWeight: 'bold', color: 'black' }}>
+      <UserCard />
+    </Typography>
+  </Paper>
+</Box>
+
       </Grid>
 
       {/* Right Column with Care Team Section */}
@@ -172,47 +175,47 @@ const MyPage: React.FC = () => {
 
       {/* Calendar Modal */}
       <Modal
-        open={state.openCalendarModal}
-        onClose={handleCloseCalendarModal}
-        aria-labelledby="calendar-modal-title"
-        aria-describedby="calendar-modal-description"
+  open={state.openCalendarModal}
+  onClose={handleCloseCalendarModal}
+  aria-labelledby="calendar-modal-title"
+  aria-describedby="calendar-modal-description"
+>
+  <Box
+    sx={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '100vh',
+    }}
+  >
+    <Box
+      sx={{
+        width: '90%',
+        maxWidth: 800,
+        maxHeight: '90vh',
+        padding: 2,
+        backgroundColor: 'background.paper',
+        borderRadius: 2,
+        position: 'relative',
+        overflowY: 'auto',
+        margin: '0 auto', // Center the inner box
+      }}
+    >
+      <IconButton
+        onClick={handleCloseCalendarModal}
+        sx={{
+          position: 'absolute',
+          top: 8,
+          right: 8,
+          color: 'red',
+        }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '100vh',
-          }}
-        >
-          <Box
-            sx={{
-              width: '90%',
-              maxWidth: 700,
-              maxHeight: '90vh',
-              padding: 2,
-              backgroundColor: 'background.paper',
-              borderRadius: 2,
-              color: 'darkblue',
-              position: 'relative',
-              overflowY: 'auto',
-            }}
-          >
-            <IconButton
-              onClick={handleCloseCalendarModal}
-              sx={{
-                position: 'absolute',
-                top: 8,
-                right: 8,
-                color: 'darkblue',
-              }}
-            >
-              <CloseIcon />
-            </IconButton>
-            <ReminderCalendar />
-          </Box>
-        </Box>
-      </Modal>
+        <CloseIcon />
+      </IconButton>
+      <ReminderCalendar />
+    </Box>
+  </Box>
+</Modal>
 
       {/* Line Chart Modal */}
       <Modal
@@ -248,7 +251,7 @@ const MyPage: React.FC = () => {
                 position: 'absolute',
                 top: 8,
                 right: 8,
-                color: 'darkblue',
+                color: 'red',
               }}
             >
               <CloseIcon />
@@ -292,7 +295,7 @@ const MyPage: React.FC = () => {
                 position: 'absolute',
                 top: 8,
                 right: 8,
-                color: 'darkblue',
+                color: 'red',                                fontSize: '1.5rem'
               }}
             >
               <CloseIcon />
@@ -336,7 +339,8 @@ const MyPage: React.FC = () => {
                 position: 'absolute',
                 top: 8,
                 right: 8,
-                color: 'darkblue',
+                color: 'red',
+                fontSize: '1.5rem'
               }}
             >
               <CloseIcon />

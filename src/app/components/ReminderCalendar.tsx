@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, TextField, Button, List, ListItem, IconButton, Paper } from '@mui/material';
+import { Typography, TextField, Button, List, ListItem, IconButton, Paper } from '@mui/material';
 import Calendar from 'react-calendar';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -86,8 +86,6 @@ const ReminderCalendar = () => {
         if (!response.ok) throw new Error('Failed to update reminder');
   
         const dateKey = date.toDateString();
-        console.log('Current reminders before update:', prevReminders);
-        console.log('Updating reminder with ID:', editReminderId);
   
         setReminders(prevReminders => {
           const updatedReminders = prevReminders[dateKey] || [];
@@ -129,18 +127,18 @@ const ReminderCalendar = () => {
   const upcomingReminders = getUpcomingReminders();
 
   return (
-    <Box p={3} display="flex" flexDirection="column" alignItems="center" sx={{ bgcolor: 'background.default' }}>
+    <Paper sx={{ padding: 3, bgcolor: 'background.default' }}>
       <Typography gutterBottom color="text.primary">
         Calendar with Reminders
       </Typography>
-      <Box mt={4} p={2} width="100%" maxWidth={400} sx={{ bgcolor: 'background.paper' }}>
+      <div style={{ marginTop: '32px', padding: '16px', width: '100%', maxWidth: '400px', backgroundColor: 'background.paper' }}>
         <Typography gutterBottom color="text.primary">
           Upcoming Reminders
         </Typography>
         <List>
           {upcomingReminders.length > 0 ? (
             upcomingReminders.map((entry, index) => (
-              <Box key={index} mb={2}>
+              <div key={index} style={{ marginBottom: '16px' }}>
                 <Typography variant="subtitle1" color="text.primary">
                   {entry.date}
                 </Typography>
@@ -164,14 +162,14 @@ const ReminderCalendar = () => {
                     </ListItem>
                   ))}
                 </List>
-              </Box>
+              </div>
             ))
           ) : (
             <Typography color="text.primary">No upcoming reminders</Typography>
           )}
         </List>
-      </Box>
-      <Box mb={2}>
+      </div>
+      <div style={{ marginBottom: '16px' }}>
         <Calendar
           onChange={handleDateChange}
           value={date}
@@ -179,9 +177,9 @@ const ReminderCalendar = () => {
           locale="en-US"
           className="react-calendar-dark"
         />
-      </Box>
+      </div>
 
-      <Box display="flex" mb={2} alignItems="center">
+      <div style={{ display: 'flex', marginBottom: '16px', alignItems: 'center' }}>
         <TextField
           value={newReminder}
           onChange={(e) => setNewReminder(e.target.value)}
@@ -192,10 +190,10 @@ const ReminderCalendar = () => {
         <IconButton onClick={handleAddReminder} color="primary">
           <AddIcon />
         </IconButton>
-      </Box>
+      </div>
 
       {editReminderId !== null && (
-        <Box display="flex" mb={2} alignItems="center">
+        <div style={{ display: 'flex', marginBottom: '16px', alignItems: 'center' }}>
           <TextField
             value={editReminderContent}
             onChange={(e) => setEditReminderContent(e.target.value)}
@@ -206,7 +204,7 @@ const ReminderCalendar = () => {
           <Button onClick={handleEditReminder} color="primary" variant="contained">
             Save
           </Button>
-        </Box>
+        </div>
       )}
 
       <Paper sx={{ padding: 2, width: '100%', maxWidth: 400, bgcolor: 'background.paper' }}>
@@ -234,7 +232,7 @@ const ReminderCalendar = () => {
           ))}
         </List>
       </Paper>
-    </Box>
+    </Paper>
   );
 };
 
