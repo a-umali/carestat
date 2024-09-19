@@ -1,5 +1,5 @@
 "use client";
-
+import Navbar from "../components/Navbar";
 import React, { useEffect, useState } from "react";
 import { Typography, Paper, Grid, Button, TextField } from "@mui/material";
 
@@ -111,11 +111,12 @@ const SummaryPage = () => {
   }
 
   return (
+    
     <Grid
     container
     spacing={2}
     style={{
-      backgroundImage: `url('/images/dashbg.png')`,
+      backgroundImage: `url('/images/newbg.png')`,
       backgroundSize: 'auto',
       backgroundRepeat: 'repeat',
       minHeight: '100vh',
@@ -123,7 +124,9 @@ const SummaryPage = () => {
       boxSizing: 'border-box',
     }}
   >
+
     <Grid container spacing={3} sx={{ padding: 5, marginTop: '80px' }} justifyContent={"center"}>
+    <Navbar></Navbar>
       {editPatient ? (
         <Grid item xs={12} sm={6} md={4}>
           <Paper sx={{ padding: 3, boxShadow: 3 }}>

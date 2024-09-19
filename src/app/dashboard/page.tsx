@@ -16,19 +16,20 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
-import CardForm from '../../components/CardForm';
-import LineChart from '../../components/LineChart';
-import ReminderCalendar from '../../components/ReminderCalendar';
+import CardForm from '../components/CardForm';
+import LineChart from '../components/LineChart';
+import ReminderCalendar from '../components/ReminderCalendar';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AddchartIcon from '@mui/icons-material/Addchart';
-import CareTeam from '../../components/CareTeam';
+import CareTeam from '../components/CareTeam';
 import CloseIcon from '@mui/icons-material/Close';
-import UserCard from '../../components/UserCard';
-import PatientForm from '../../components/PatientForm';
-import BmiCalculator from '../../components/BmiCalculator';
+import UserCard from '../components/UserCard';
+import PatientForm from '../components/PatientForm';
+import BmiCalculator from '../components/BmiCalculator';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import ContactEmergencyIcon from '@mui/icons-material/ContactEmergency';
+import Navbar from '../components/Navbar';
 
 // Define types for component state
 type State = {
@@ -65,11 +66,12 @@ const MyPage: React.FC = () => {
   const handleClosePatientFormModal = () => setState(prev => ({ ...prev, openPatientFormModal: false }));
 
   return (
+    
     <Grid
       container
       spacing={2}
       style={{
-        backgroundImage: `url('/images/dashbg.png')`,
+        backgroundImage: `url('/images/newbg.png')`,
         backgroundSize: 'auto',
         backgroundRepeat: 'repeat',
         minHeight: '100vh',
@@ -77,9 +79,10 @@ const MyPage: React.FC = () => {
         boxSizing: 'border-box',
       }}
     >
+      <Navbar></Navbar>
       {/* Header Section */}
       <Grid item xs={12} style={{ marginBottom: 0 }}>
-      <Box sx={{ pt: 20, color: 'transparent' }}> {/* pt: 10 will add padding-top */}
+      <Box sx={{ pt: 10, color: 'transparent' }}> {/* pt: 10 will add padding-top */}
   <Paper
     style={{
       padding: '16px',

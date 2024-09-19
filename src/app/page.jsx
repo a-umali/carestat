@@ -10,6 +10,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"; // Icon for Credentials Login
 import LoadingOverlay from "../app/components/LoadingOverlay";
+import Navbar from "./components/Navbar";
 
 export default function HomePage() {
     const { data: session, status } = useSession(); // include status to handle loading state
@@ -48,7 +49,7 @@ export default function HomePage() {
         setLoadingStartTime(Date.now()); // Record the start time
 
         try {
-            await signIn("github", { callbackUrl: "/dashboard/my-page" });
+            await signIn("github", { callbackUrl: "/dashboard" });
         } catch (error) {
             console.error("GitHub login failed:", error);
         } finally {
@@ -66,7 +67,7 @@ export default function HomePage() {
         setLoadingStartTime(Date.now()); // Record the start time
 
         try {
-            await signIn("credentials", { callbackUrl: "/dashboard/my-page" });
+            await signIn("credentials", { callbackUrl: "/dashboard" });
         } catch (error) {
             console.error("Credentials login failed:", error);
         } finally {
@@ -79,7 +80,7 @@ export default function HomePage() {
         }
     };
 
-    const backgroundImage = "/images/background.jpg";
+    const backgroundImage = "/images/newbg.png";
 
     return (
         <>
@@ -121,15 +122,16 @@ export default function HomePage() {
                         }}
                     >
                         <Typography variant="h4" sx={{ mb: 2, color: 'black' }}>
-                            Welcome to my website
+                            Welcome to CareSTAT
                         </Typography>
 
+                        {/* FUTURE PLANS
                         <Box>
                             <Typography variant="h6" sx={{ display: "flex", alignItems: "center" }}>
                                 <ForumIcon fontSize="large" sx={{ mr: 1 }} /> Communicate with your doctor
                             </Typography>
                             <Typography>Get answers to your medical questions from the comfort of your own home</Typography>
-                        </Box>
+                        </Box> */}
                         <Box sx={{ mt: 2 }}>
                             <Typography variant="h6" sx={{ display: "flex", alignItems: "center" }}>
                                 <FolderIcon fontSize="large" sx={{ mr: 1 }} /> Save your medical records

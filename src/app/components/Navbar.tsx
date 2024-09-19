@@ -14,7 +14,7 @@ import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 
 const pages = [
-  { title: "Home", href: "/" },
+  { title: "Home", href: "/dashboard" },
   { title: "Summary", href: "/summary" },
 ];
 
@@ -35,11 +35,11 @@ export const Navbar = () => {
   };
 
   const handleMouseOver = (event) => {
-    (event.currentTarget as HTMLElement).style.backgroundColor = "rgba(0, 255, 0, 0.5)"; // Light green
+    event.currentTarget.style.backgroundColor = "rgba(0, 255, 0, 0.5)"; // Light green
   };
 
   const handleMouseOut = (event) => {
-    (event.currentTarget as HTMLElement).style.backgroundColor = "transparent";
+    event.currentTarget.style.backgroundColor = "transparent";
   };
 
   return (
@@ -85,15 +85,9 @@ export const Navbar = () => {
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
+              anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
               keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
+              transformOrigin={{ vertical: "top", horizontal: "left" }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
             >
@@ -107,12 +101,10 @@ export const Navbar = () => {
                 </MenuItem>
               ))}
               {session && (
-                <MenuItem
-                  onClick={() => {
-                    handleCloseNavMenu();
-                    handleSignOut();
-                  }}
-                >
+                <MenuItem onClick={() => {
+                  handleCloseNavMenu();
+                  handleSignOut();
+                }}>
                   <span style={{ color: "black" }}>Sign Out</span>
                 </MenuItem>
               )}
