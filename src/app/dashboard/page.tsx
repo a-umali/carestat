@@ -183,14 +183,6 @@ const MyPage: React.FC = () => {
   aria-labelledby="calendar-modal-title"
   aria-describedby="calendar-modal-description"
 >
-  <Box
-    sx={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: '100vh',
-    }}
-  >
     <Box
       sx={{
         width: '90%',
@@ -217,7 +209,6 @@ const MyPage: React.FC = () => {
       </IconButton>
       <ReminderCalendar />
     </Box>
-  </Box>
 </Modal>
 
       {/* Line Chart Modal */}

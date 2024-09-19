@@ -8,7 +8,6 @@ const PatientForm = () => {
   const [formData, setFormData] = useState({
     lastName: "",
     firstName: "",
-    initial: "",
     streetAddress: "",
     city: "",
     state: "",

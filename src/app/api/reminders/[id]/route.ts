@@ -72,6 +72,10 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ message: 'ID and content are required' }, { status: 400 });
     }
 
+    if (isNaN(Number(id))) {
+      return NextResponse.json({ message: 'Invalid ID format' }, { status: 400 });
+    }
+
     const db = await pool.getConnection();
     const [result] = await db.execute('UPDATE reminders SET content = ? WHERE id = ?', [content, id]);
     db.release();

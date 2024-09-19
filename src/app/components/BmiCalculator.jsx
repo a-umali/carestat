@@ -8,30 +8,6 @@ const BmiCalculator = () => {
   const [category, setCategory] = useState('');
   const [error, setError] = useState('');
 
-  const calculateBmiAndCategory = (weight, height) => {
-    const weightValue = parseFloat(weight);
-    const heightValue = parseFloat(height);
-    
-    if (isNaN(weightValue) || weightValue <= 0 || isNaN(heightValue) || heightValue <= 0) {
-      return { bmi: null, category: 'Invalid input' };
-    }
-
-    const bmi = weightValue / (heightValue * heightValue);
-    let category;
-
-    if (bmi < 18.5) {
-      category = 'Underweight';
-    } else if (bmi < 25) {
-      category = 'Healthy Weight';
-    } else if (bmi < 30) {
-      category = 'Overweight';
-    } else {
-      category = 'Obesity';
-    }
-
-    return { bmi: parseFloat(bmi.toFixed(1)), category };
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError('');
@@ -39,7 +15,8 @@ const BmiCalculator = () => {
     setCategory('');
 
     const weightValue = parseFloat(weight);
-    const heightValue = parseFloat(height);
+    const heightValue = parseFloat(height); // Keep height in cm for local calculation
+
     if (isNaN(weightValue) || weightValue <= 0 || isNaN(heightValue) || heightValue <= 0) {
       setError('Please enter valid positive numbers for weight and height.');
       return;
@@ -49,7 +26,7 @@ const BmiCalculator = () => {
       const response = await fetch('/api/bmi', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ weight: weightValue, height: heightValue }),
+        body: JSON.stringify({ weight: weightValue, height: heightValue }), // Send height in cm
       });
 
       if (!response.ok) {
@@ -58,9 +35,8 @@ const BmiCalculator = () => {
       }
 
       const data = await response.json();
-      const { bmi, category } = calculateBmiAndCategory(data.weight, data.height);
-      setBmi(bmi);
-      setCategory(category);
+      setBmi(data.bmi);
+      setCategory(data.category);
     } catch (err) {
       setError(err.message || 'An error occurred while calculating BMI.');
     }
@@ -83,15 +59,15 @@ const BmiCalculator = () => {
           sx={{ mb: 2 }}
         />
         <TextField
-          label="Height (m)"
+          label="Height (cm)" // Change label to centimeters
           type="number"
-          step="0.01"
+          step="0.1" // Adjust step to match centimeters
           value={height}
           onChange={(e) => setHeight(e.target.value)}
           fullWidth
           required
           margin="normal"
-          inputProps={{ min: "0", step: "0.01" }}
+          inputProps={{ min: "0", step: "0.1" }}
           sx={{ mb: 2 }}
         />
         <Button variant="contained" color="primary" type="submit">

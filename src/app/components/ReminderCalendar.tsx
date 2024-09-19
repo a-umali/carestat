@@ -131,7 +131,7 @@ const ReminderCalendar = () => {
       <Typography gutterBottom color="text.primary">
         Calendar with Reminders
       </Typography>
-      <div style={{ marginTop: '32px', padding: '16px', width: '100%', maxWidth: '400px', backgroundColor: 'background.paper' }}>
+      <div style={{ marginTop: '32px', padding: '16px', width: '100%', maxWidth: '500px', backgroundColor: 'background.paper' }}>
         <Typography gutterBottom color="text.primary">
           Upcoming Reminders
         </Typography>

@@ -11,6 +11,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle"; // Icon for Credentials Login
 import LoadingOverlay from "../app/components/LoadingOverlay";
 import Navbar from "./components/Navbar";
+import Image from "next/image";
 
 export default function HomePage() {
     const { data: session, status } = useSession(); // include status to handle loading state
@@ -121,10 +122,16 @@ export default function HomePage() {
                             maxWidth: "800px", // Optional: set a max width for better layout control
                         }}
                     >
-                        <Typography variant="h4" sx={{ mb: 2, color: 'black' }}>
-                            Welcome to CareSTAT
+                        <Typography variant="h3" sx={{ mb: 2, color: 'black' }}>
+                        Welcome to       
                         </Typography>
-
+                            <Image 
+                                src="/images/logo1.png" 
+                                alt="Logo" 
+                                width={300} // Adjust width as needed
+                                height={150} // Adjust height as needed
+                                style={{ marginLeft: '10px' }} // Optional: add some space between text and image
+                            />
                         {/* FUTURE PLANS
                         <Box>
                             <Typography variant="h6" sx={{ display: "flex", alignItems: "center" }}>
