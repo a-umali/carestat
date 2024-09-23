@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSession, signIn } from 'next-auth/react';
 import {
   Paper,
   Typography,
@@ -41,6 +42,14 @@ type State = {
 };
 
 const MyPage: React.FC = () => {
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (status === 'loading') return; // Wait until session is loaded
+    if (!session) signIn(); // Redirect to sign-in if not authenticated
+  }, [session, status]);
+
+  // State management for modals and drawer
   const [state, setState] = useState<State>({
     openCalendarModal: false,
     openChartModal: false,
@@ -65,6 +74,11 @@ const MyPage: React.FC = () => {
   const handleOpenPatientFormModal = () => setState(prev => ({ ...prev, openPatientFormModal: true }));
   const handleClosePatientFormModal = () => setState(prev => ({ ...prev, openPatientFormModal: false }));
 
+  // If the session is still loading, you might want to return a loading indicator
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+  
   return (
     
     <Grid
@@ -114,7 +128,7 @@ const MyPage: React.FC = () => {
           startIcon={<HistoryEduIcon />}
           style={{ marginBottom: '8px', width: '100%' }}
         >
-          Open Tools Drawer
+          <Typography variant="h6">Open Tools Drawer</Typography>
         </Button>
         <Paper style={{ padding: '16px', flex: '1', minHeight: '400px' }}>
           <Typography variant="subtitle1">Care Team and Recent Providers</Typography>

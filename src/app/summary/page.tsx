@@ -1,9 +1,12 @@
 "use client";
-import Navbar from "../components/Navbar";
+
 import React, { useEffect, useState } from "react";
+import { useSession, signIn } from "next-auth/react";
 import { Typography, Paper, Grid, Button, TextField } from "@mui/material";
+import Navbar from "../components/Navbar";
 
 const SummaryPage = () => {
+  const { data: session, status } = useSession();
   const [patients, setPatients] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -36,6 +39,12 @@ const SummaryPage = () => {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (status === "loading") return; // Wait until session is loaded
+    if (!session) signIn(); // Redirect to sign-in if not authenticated
+  }, [session, status]);
+
 
   const formatDate = (dateString: string) => {
     if (!dateString) return "N/A";

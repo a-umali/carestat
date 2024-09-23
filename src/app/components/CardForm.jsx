@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Button, TextField, FormControl, Card, CardContent, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@mui/material/styles';
+import { green } from '@mui/material/colors';
 
 const CardForm = () => {
   const [title, setTitle] = useState('');
@@ -119,14 +120,14 @@ const CardForm = () => {
             sx={{
               marginTop: 2,
               marginBottom: 2,
-              border: `5px solid ${secondaryColor}`,
+              border: `5px solid green`,
               maxWidth: 1000,
               overflow: 'auto',
               color: 'black',
             }}
           >
             <CardContent sx={{ padding: '8px' }}>
-              <Typography component="div" color={secondaryColor}>
+              <Typography component="div" color={green}>
                 {card.title}
               </Typography>
               <Typography variant="subtitle2">

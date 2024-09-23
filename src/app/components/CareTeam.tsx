@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Modal, TextField, FormControl, Box } from '@mui/material';
+import { Button, Modal, TextField, FormControl, Paper } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ProviderCard from './ProviderCard';
 
@@ -138,14 +138,14 @@ const CareTeam: React.FC = () => {
       </Button>
 
       <Modal open={showModal} onClose={() => setShowModal(false)}>
-        <Box
+        <Paper
           sx={{
             position: 'absolute',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
             width: 400,
-            bgcolor: 'background.paper',
+            bgcolor: 'white',
             border: '2px solid #000',
             boxShadow: 24,
             p: 4,
@@ -191,15 +191,15 @@ const CareTeam: React.FC = () => {
               onChange={handleChange}
             />
           </FormControl>
-          <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}>
+          <Paper sx={{ mt: 2, display: 'flex', justifyContent: 'space-between', p: 1 }}>
             <Button variant="outlined" color="secondary" onClick={() => setShowModal(false)}>
               Close
             </Button>
             <Button variant="contained" color="primary" onClick={handleAddProvider}>
               {isEditing ? 'Save Changes' : 'Add Provider'}
             </Button>
-          </Box>
-        </Box>
+          </Paper>
+        </Paper>
       </Modal>
     </div>
   );
