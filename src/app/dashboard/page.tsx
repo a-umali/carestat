@@ -147,48 +147,41 @@ const MyPage: React.FC = () => {
         </Grid>
       </Grid>
 
-      {/* Drawer Component */}
-      <Drawer anchor="left" open={state.isDrawerOpen} onClose={toggleDrawer(false)}>
-        <Box role="presentation" style={{ width: 300, padding: '16px' }}>
-          <Typography variant="h6" gutterBottom>
-            Tools
-          </Typography>
-          <List>
-            <ListItem disablePadding>
-              <ListItemButton onClick={handleOpenCalendarModal}>
-                <ListItemIcon>
-                  <CalendarMonthIcon />
-                </ListItemIcon>
-                <ListItemText primary="Calendar" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton onClick={handleOpenChartModal}>
-                <ListItemIcon>
-                  <AddchartIcon />
-                </ListItemIcon>
-                <ListItemText primary="Line Chart" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton onClick={handleOpenBmiModal}>
-                <ListItemIcon>
-                  <CalculateIcon />
-                </ListItemIcon>
-                <ListItemText primary="BMI Calculator" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton onClick={handleOpenPatientFormModal}>
-                <ListItemIcon>
-                  <ContactEmergencyIcon />
-                </ListItemIcon>
-                <ListItemText primary="Patient Form" />
-              </ListItemButton>
-            </ListItem>
-          </List>
-        </Box>
-      </Drawer>
+      <Drawer 
+  anchor="left" 
+  open={state.isDrawerOpen} 
+  onClose={toggleDrawer(false)} 
+  sx={{ backdropFilter: 'none' }} // Prevents blur effect outside
+>
+  <Box role="presentation" sx={{ width: 300, p: 3, backgroundColor: 'white' }}>
+    <Typography variant="h6" gutterBottom sx={{ color: 'black', fontWeight: 'bold' }}>
+      Tools
+    </Typography>
+    <List>
+      {[
+        { text: "Calendar", icon: <CalendarMonthIcon />, modalState: 'openCalendarModal' },
+        { text: "Line Chart", icon: <AddchartIcon />, modalState: 'openChartModal' },
+        { text: "BMI Calculator", icon: <CalculateIcon />, modalState: 'openBmiModal' },
+        { text: "Patient Form", icon: <ContactEmergencyIcon />, modalState: 'openPatientFormModal' },
+      ].map((item, index) => (
+        <ListItem key={index} disablePadding>
+          <ListItemButton 
+            onClick={() => setState(prev => ({ ...prev, [item.modalState]: true }))} 
+            sx={{ 
+              '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+              borderRadius: 1,
+            }}>
+            <ListItemIcon sx={{ color: 'black', fontSize: '1.5rem' }}>
+              {item.icon}
+            </ListItemIcon>
+            <ListItemText primary={item.text} sx={{ color: 'black' }} />
+          </ListItemButton>
+        </ListItem>
+      ))}
+    </List>
+  </Box>
+</Drawer>
+
 
       {/* Calendar Modal */}
       <Modal
