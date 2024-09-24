@@ -53,22 +53,23 @@ export const Navbar = () => {
     >
       <Container maxWidth="lg">
         <Toolbar disableGutters sx={{ justifyContent: 'space-between', flexWrap: 'wrap' }}>
+
           {/* Logo Section */}
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Link href="/" passHref legacyBehavior>
-              <a>
-                <img
-                  src="/images/logo1.png"
-                  alt="Logo"
-                  style={{
-                    height: 100,
-                    width: "auto",
-                    marginRight: "50px",
-                  }}
-                />
-              </a>
-            </Link>
-          </Box>
+  <Link href="/dashboard" passHref legacyBehavior>
+    <a>
+      <img
+        src="/images/logo1.png"
+        alt="Logo"
+        style={{
+          height: 100,
+          width: "auto",
+          marginRight: "50px",
+        }}
+      />
+    </a>
+  </Link>
+</Box>
 
           {/* Mobile Menu Icon */}
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
@@ -78,9 +79,9 @@ export const Navbar = () => {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              color="black"
-            >
-              <MenuIcon />
+              sx={{ padding: '12px', backgroundColor: 'rgba(0, 132, 255, 0.6)', borderRadius: '50%' }} // Set background color and border radius
+>
+                <MenuIcon fontSize="inherit" sx={{ fontSize: '3rem', color: 'black' }} />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -118,7 +119,7 @@ export const Navbar = () => {
               gap: 3,
               alignItems: "center",
               justifyContent: 'center',
-              background: 'rgba(0, 132, 255, 0.1)',
+              background: 'rgba(0, 132, 255, 0.6)',
               borderRadius: '16px',
               padding: '12px 24px',
             }}

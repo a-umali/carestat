@@ -159,8 +159,8 @@ const MyPage: React.FC = () => {
     </Typography>
     <List>
       {[
-        { text: "Calendar", icon: <CalendarMonthIcon />, modalState: 'openCalendarModal' },
-        { text: "Line Chart", icon: <AddchartIcon />, modalState: 'openChartModal' },
+        { text: "Calendar/Reminders", icon: <CalendarMonthIcon />, modalState: 'openCalendarModal' },
+        { text: "Blood Sugar Check", icon: <AddchartIcon />, modalState: 'openChartModal' },
         { text: "BMI Calculator", icon: <CalculateIcon />, modalState: 'openBmiModal' },
         { text: "Patient Form", icon: <ContactEmergencyIcon />, modalState: 'openPatientFormModal' },
       ].map((item, index) => (

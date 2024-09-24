@@ -74,7 +74,7 @@ const LineChart = () => {
         Check your Blood Sugar Level
       </Typography>
       <Typography variant="subtitle1" gutterBottom>
-        Line will turn RED if it's not within health range
+The line will turn RED if the measured value is outside the healthy range. Please seek guidance from a medical professional to discuss your results and receive appropriate advice.
       </Typography>
       <div style={{ marginBottom: '16px' }}>
         <TextField

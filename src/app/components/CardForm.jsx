@@ -13,7 +13,6 @@ const CardForm = () => {
   const [editingCardId, setEditingCardId] = useState(null);
 
   const theme = useTheme();
-  const secondaryColor = theme.palette.secondary.main;
 
   useEffect(() => {
     // Fetch cards on component mount

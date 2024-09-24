@@ -8,10 +8,13 @@ export async function POST(req: NextRequest) {
     const data = await req.json();
     console.log("Received Data:", data);
 
+    // Ensure the date of birth is formatted correctly
+    const formattedDateOfBirth = new Date(data.dateOfBirth).toISOString().split('T')[0];
+
     // Save data to the database
     const db = await pool.getConnection();
     await db.execute(
-      'INSERT INTO patients (lastName, firstName, streetAddress, city, state, zipCode, dateOfBirth) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      'INSERT INTO patients (lastName, firstName, streetAddress, city, state, zipCode, dateOfBirth, medicareId, homePhone, cellPhone, religion, maritalStatus, occupation, workNumber, employerAddress) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [
         data.lastName,
         data.firstName,
@@ -35,7 +38,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "Data saved successfully" });
   } catch (error) {
     console.error("Error saving data:", error);
-    return NextResponse.json({ message: "Error saving data" }, { status: 500 });
+    return NextResponse.json({ message: "Error saving data", error: error.message }, { status: 500 });
   }
 }
 
@@ -54,6 +57,6 @@ export async function GET(req: NextRequest) {
     }
   } catch (error) {
     console.error("Error fetching data:", error);
-    return NextResponse.json({ message: "Error fetching data" }, { status: 500 });
+    return NextResponse.json({ message: "Error fetching data", error: error.message }, { status: 500 });
   }
 }
