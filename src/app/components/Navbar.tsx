@@ -46,7 +46,7 @@ export const Navbar = () => {
     <AppBar
       position="fixed"
       sx={{
-        backgroundColor: "transparent",
+        backgroundColor: 'rgba(0, 132, 255, 0.6)',
         zIndex: 1200,
         padding: "12px 0",
       }}
@@ -79,7 +79,7 @@ export const Navbar = () => {
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
-              sx={{ padding: '12px', backgroundColor: 'rgba(0, 132, 255, 0.6)', borderRadius: '50%' }} // Set background color and border radius
+              sx={{ padding: '12px', borderRadius: '50%' }} // Set background color and border radius
 >
                 <MenuIcon fontSize="inherit" sx={{ fontSize: '3rem', color: 'black' }} />
             </IconButton>
