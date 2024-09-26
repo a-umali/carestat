@@ -119,7 +119,6 @@ export const Navbar = () => {
               gap: 3,
               alignItems: "center",
               justifyContent: 'center',
-              background: 'rgba(0, 132, 255, 0.6)',
               borderRadius: '16px',
               padding: '12px 24px',
             }}
