@@ -90,25 +90,25 @@ export default function HomePage() {
                 container
                 spacing={2}
                 sx={{
-                    padding: 2,
-                    display: "flex",
-                    alignItems: "center", // Center content vertically
-                    justifyContent: "center",
-                    minHeight: "100vh", // Ensure the container takes full viewport height
-                    backgroundImage: `url(${backgroundImage})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    overflow: "hidden", // Prevent overflow issues
+                    backgroundImage: `url('/images/newbg.png')`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    minHeight: '100vh',
+                    paddingTop: '64px',
+                    boxSizing: 'border-box',
+                    display: 'flex',
+                    alignItems: 'center', // Center vertically
+                    justifyContent: 'center', // Center horizontally
                 }}
             >
                 {/* Column with xs=8 */}
                 <Grid
                     item
-                    xs={12} sm={8} // Adjusted for responsiveness
+                    xs={12} sm={8} // Responsive sizing
                     sx={{
                         padding: 2,
                         display: "flex",
-                        justifyContent: "center", // Center content horizontally
+                        justifyContent: "center",
                     }}
                 >
                     <Paper
@@ -116,29 +116,23 @@ export default function HomePage() {
                             padding: 3,
                             display: "flex",
                             flexDirection: "column",
-                            justifyContent: "space-between",
+                            justifyContent: "center",
                             backgroundColor: "rgba(255, 255, 255, 0.9)",
-                            width: "100%", // Ensure full width
-                            maxWidth: "800px", // Optional: set a max width for better layout control
+                            width: "100%", // Full width
+                            maxWidth: "800px", // Max width for better layout control
                         }}
                     >
                         <Typography variant="h3" sx={{ mb: 2, color: 'black' }}>
-                        Welcome to       
+                            Welcome to
                         </Typography>
-                            <Image 
-                                src="/images/logo1.png" 
-                                alt="Logo" 
-                                width={300} // Adjust width as needed
-                                height={150} // Adjust height as needed
-                                style={{ marginLeft: '10px' }} // Optional: add some space between text and image
-                            />
-                        {/* FUTURE PLANS
-                        <Box>
-                            <Typography variant="h6" sx={{ display: "flex", alignItems: "center" }}>
-                                <ForumIcon fontSize="large" sx={{ mr: 1 }} /> Communicate with your doctor
-                            </Typography>
-                            <Typography>Get answers to your medical questions from the comfort of your own home</Typography>
-                        </Box> */}
+                        <Image 
+                            src="/images/logo1.png" 
+                            alt="Logo" 
+                            width={300} // Adjust width as needed
+                            height={150} // Adjust height as needed
+                            style={{ marginLeft: '10px' }} // Space between text and image
+                        />
+
                         <Box sx={{ mt: 2 }}>
                             <Typography variant="h6" sx={{ display: "flex", alignItems: "center" }}>
                                 <FolderIcon fontSize="large" sx={{ mr: 1 }} /> Save your medical records
@@ -157,7 +151,7 @@ export default function HomePage() {
                 {/* Column with xs=4 */}
                 <Grid
                     item
-                    xs={12} sm={4} // Adjusted for responsiveness
+                    xs={12} sm={4} // Responsive sizing
                     sx={{
                         padding: 2,
                         display: "flex",
@@ -174,7 +168,7 @@ export default function HomePage() {
                             alignItems: "center", // Center content horizontally
                             backgroundColor: "rgba(255, 255, 255, 0.9)",
                             width: "100%",
-                            maxWidth: "400px", // Optional: set a max width for better layout control
+                            maxWidth: "400px", // Max width for better layout control
                             textAlign: "center", // Center text in Paper
                         }}
                     >
