@@ -1,35 +1,40 @@
 CareSTAT - Medical Records Management System
+
 Overview
+
 CareSTAT is a web application designed to allow users to securely store, manage, and share their medical records. The application integrates secure authentication using GitHub and custom credentials, ensuring that only authorized users can access sensitive health information. Additionally, users have control over who can access their medical data.
 
 Features
 User Authentication: Users can log in via GitHub or custom credentials, powered by NextAuth.js.
 Medical Data Management: Store, manage, and share medical records with authorized users.
+
 Tech Stack
 Frontend: Next.js, TypeScript
 Backend: Node.js
 Authentication: NextAuth.js (using GitHubProvider and CredentialsProvider)
 Database: MySQL
 ORM (optional): Prisma
+
 Getting Started
 Prerequisites
 Node.js: Version 14 or later
 MySQL: A local instance or cloud service
 GitHub OAuth App: For GitHub login (create OAuth credentials)
+
 Installation
 Clone the repository:
 bash
-Copy code
 git clone https://github.com/a-umali/carestat.git
 cd carestat
+
 Install dependencies:
 bash
-Copy code
 npm install
+
 Set up environment variables:
 Create a .env file in the root directory and populate it with the following:
 bash
-Copy code
+
 # MySQL Database
 DATABASE_URL=mysql://user:password@localhost:3306/db_name
 
@@ -42,7 +47,8 @@ GITHUB_CLIENT_SECRET=your_github_client_secret
 Database Setup
 Create a new MySQL database and run the following SQL scripts to set up the required tables.
 sql
-Copy code
+
+
 -- Create the 'carestat' database
 CREATE DATABASE IF NOT EXISTS carestat;
 USE carestat;
@@ -116,7 +122,6 @@ Running the Application
 Start the development server:
 
 bash
-Copy code
 npm run dev
 Visit http://localhost:3000 in your browser to see the application in action.
 
